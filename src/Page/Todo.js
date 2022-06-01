@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
-import { createStore } from 'redux';
-import todoReducer from './todoReducer';
+import React, { useEffect } from 'react'
+import { createStore } from 'redux'
+import todoReducer from './todoReducer'
 import * as action from './todoAction'
-import './todo.scss';
+import './todo.scss'
 
 const store = createStore(
   todoReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-function Todo() {
+export default function Todo() {
   useEffect(() => {
     const btnListener = document.querySelector('.addBtn')
+    const addingField = document.querySelector('.addingField')
     btnListener.addEventListener('click', addTodo)
+    addingField.addEventListener('keypress', (e) => {
+      if (e.keyCode === 13) {addTodo()}
+    })
 
 
     const todoList = document.querySelector('.todoList')
@@ -20,6 +24,9 @@ function Todo() {
 
     return () => {
       btnListener.removeEventListener('click', addTodo)
+      addingField.addEventListener('keypress', (e) => {
+        if (e.keyCode === 13) {addTodo()}
+      })
       todoList.removeEventListener('click', editTodo)
     }
   },[])
@@ -33,7 +40,10 @@ function Todo() {
   }
 
   const editTodo = (e) => {
-    console.log(e.target.value)
+    const editTarget = parseInt(e.target.dataset.num)
+    if(e.target.nodeName ==='SPAN'){
+      store.dispatch(action.deleteTodo(editTarget))
+    }
   }
 
   store.subscribe(() => {
@@ -45,12 +55,13 @@ function Todo() {
     const composeLI = todoState.map((item, index) =>
       `<li class="todoItem" key=${index}>
         <div class="checkGroup">
-          <input type="checkbox"/>
+          <input type="checkbox" data-num=${index} ${item.completed ? 'checked' : null} />
           <p>${item.value}</p>
         </div>
-        <span class="deleteBtn"></span>
+        <span class="deleteBtn" data-num=${index} }></span>
       </li>`
     )
+    
     const todoList = document.querySelector('.todoList')
     todoList.innerHTML = composeLI
   }
@@ -66,5 +77,3 @@ function Todo() {
     </div>
   );
 }
-
-export default Todo;

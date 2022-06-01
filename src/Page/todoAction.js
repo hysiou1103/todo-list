@@ -7,3 +7,10 @@ export const addTodo = textInput => (
     }
   }
 )
+
+export const deleteTodo = index => (
+  {
+    type: 'DELETE_TODO',
+    payload: index
+  }
+)

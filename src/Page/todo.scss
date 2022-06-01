@@ -38,6 +38,10 @@ $secondary: #9D9D9D;
   border-radius: 15px;
   border: 1px solid rgba($color: $secondary, $alpha: 0.4);
   outline: none;
+
+  &:focus {
+    border: 1px solid $secondary
+  }
 }
 
 .addBtn {
