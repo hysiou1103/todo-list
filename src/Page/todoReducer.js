@@ -13,6 +13,13 @@ function todoReducer(state = initialState, action) {
         tempTodos.splice(action.payload, 1)
         return { ...state, todos: [...tempTodos] }
       }
+
+    case 'UPDATE_COMPLETED':
+      {
+        const tempTodos = [...state.todos]
+        tempTodos[action.payload].completed = !tempTodos[action.payload].completed
+        return { ...state, todos: [...tempTodos] }
+      }
     default:
       return state
   }

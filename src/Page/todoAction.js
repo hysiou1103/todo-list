@@ -14,3 +14,10 @@ export const deleteTodo = index => (
     payload: index
   }
 )
+
+export const updateCompleted = index => (
+  {
+    type: 'UPDATE_COMPLETED',
+    payload: index
+  }
+)

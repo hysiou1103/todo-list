@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createStore } from 'redux'
 import todoReducer from './todoReducer'
 import * as action from './todoAction'
@@ -10,6 +10,8 @@ const store = createStore(
 );
 
 export default function Todo() {
+  const [testBtn, setTestBtn] = useState(false)
+
   useEffect(() => {
     const btnListener = document.querySelector('.addBtn')
     const addingField = document.querySelector('.addingField')
@@ -44,6 +46,9 @@ export default function Todo() {
     if(e.target.nodeName ==='SPAN'){
       store.dispatch(action.deleteTodo(editTarget))
     }
+        if(e.target.nodeName ==='INPUT'){
+      store.dispatch(action.updateCompleted(editTarget))
+    }
   }
 
   store.subscribe(() => {
@@ -56,12 +61,11 @@ export default function Todo() {
       `<li class="todoItem" key=${index}>
         <div class="checkGroup">
           <input type="checkbox" data-num=${index} ${item.completed ? 'checked' : null} />
-          <p>${item.value}</p>
+          <p class=${item.completed? 'completedItem' : null}>${item.value}</p>
         </div>
         <span class="deleteBtn" data-num=${index} }></span>
       </li>`
-    )
-    
+    ).join('')
     const todoList = document.querySelector('.todoList')
     todoList.innerHTML = composeLI
   }
@@ -74,6 +78,7 @@ export default function Todo() {
         <button className='addBtn'> + </button>
       </div>
       <ul className='todoList'></ul>
+      <button onClick={()=>setTestBtn(!testBtn)}>測試</button>
     </div>
   );
 }
