@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { createStore } from 'redux'
 import todoReducer from './todoReducer'
 import * as action from './todoAction'
@@ -10,8 +10,6 @@ const store = createStore(
 );
 
 export default function Todo() {
-  const [testBtn, setTestBtn] = useState(false)
-
   useEffect(() => {
     const btnListener = document.querySelector('.addBtn')
     const addingField = document.querySelector('.addingField')
@@ -78,7 +76,6 @@ export default function Todo() {
         <button className='addBtn'> + </button>
       </div>
       <ul className='todoList'></ul>
-      <button onClick={()=>setTestBtn(!testBtn)}>測試</button>
     </div>
   );
 }
