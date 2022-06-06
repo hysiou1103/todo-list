@@ -1,12 +1,14 @@
-export const addTodo = textInput => (
+export const addTodo = ({ text, id }) => (
   {
     type: 'ADD_TODO',
     payload: {
-      value: textInput,
-      completed: false
+      text,
+      id,
+      completed: false,
     }
   }
 )
+  
 
 export const deleteTodo = index => (
   {

@@ -10,14 +10,16 @@ function todoReducer(state = initialState, action) {
     case 'DELETE_TODO':
       {
         const tempTodos = [...state.todos]
-        tempTodos.splice(action.payload, 1)
+        const targetIndex = tempTodos.findIndex(item=> item.id === action.payload)
+        tempTodos.splice(targetIndex, 1)
         return { ...state, todos: [...tempTodos] }
       }
 
     case 'UPDATE_COMPLETED':
       {
         const tempTodos = [...state.todos]
-        tempTodos[action.payload].completed = !tempTodos[action.payload].completed
+        const targetIndex = tempTodos.findIndex(item => item.id === action.payload)
+        tempTodos[targetIndex].completed = !tempTodos[targetIndex].completed
         return { ...state, todos: [...tempTodos] }
       }
     default:

@@ -28,7 +28,6 @@ $secondary: #9D9D9D;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba($color: $secondary, $alpha: 0.4);
 }
 
 .addingField {
@@ -58,6 +57,56 @@ $secondary: #9D9D9D;
   &:hover {
     color: white;
     background-color: $primary;
+  }
+}
+
+.statusTab {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  border: 1px solid rgba($color: $secondary, $alpha: 0.4);
+  color: $primary;
+}
+
+.tabItem {
+  width: 33.33%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+  &.active {
+    background-color: rgba($color: $secondary, $alpha: 0.2);
+  }
+
+  &:hover {
+    background-color: rgba($color: $secondary, $alpha: 0.2);
+
+  }
+}
+
+.todoList {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.todoItem {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.6rem;
+
+  .checkGroup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 80%;
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
@@ -96,26 +145,5 @@ $secondary: #9D9D9D;
 
   &::before {
     transform: rotate(45deg);
-  }
-}
-
-.todoItem {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.6rem;
-
-  .checkGroup {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 80%;
-
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-    }
   }
 }
