@@ -1,6 +1,8 @@
-import { applyMiddleware, compose, createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import todoReducer from './Page/todoReducer'
+import todoReducer from './Page/todoSlice'
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-export const store = createStore(todoReducer, composeEnhancer(applyMiddleware(logger)))
+export const store = configureStore({
+  reducer: todoReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+})

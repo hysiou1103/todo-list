@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import * as actions from './todoAction'
+import { addTodo, deleteTodo, updateCompleted } from './todoSlice'
 import './todo.scss'
 
 const tabOptions = [
@@ -14,6 +14,7 @@ export default function Todo() {
   const todos = useSelector((state) => state.todos);
   const [chosenTab, setChosenTab] = useState('all')
   const [renderTodos, setRenderTodos] = useState([])
+
   useEffect(() => {
     if (chosenTab === 'all') { setRenderTodos([...todos]) }
     if (chosenTab === 'inProgress') { setRenderTodos([...todos.filter(item => !item.completed)]) }
@@ -21,16 +22,15 @@ export default function Todo() {
   }, [chosenTab, todos])
   
   const [inputField, setInputField] = useState('')
-  const addTodo = () => {
+  const prepareAddTodo = () => {
     if (inputField) {
-      const id = new Date() * 1000
       const text = inputField
-      dispatch(actions.addTodo({ text, id }))
+      dispatch(addTodo({ text, completed:false }))
       setInputField('')
     }
   }
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {addTodo()}
+    if (e.key === 'Enter') {prepareAddTodo()}
   }
 
   return (
@@ -42,7 +42,7 @@ export default function Todo() {
           onChange={e => setInputField(e.target.value.trim())}
           onKeyPress={handleKeyPress}
         />
-        <button className='addBtn' onClick={addTodo}> + </button>
+        <button className='addBtn' onClick={prepareAddTodo}> + </button>
       </div>
       <ul className='statusTab'>
         {tabOptions.map(item =>
@@ -59,12 +59,12 @@ export default function Todo() {
             <div className="checkGroup">
               <input type="checkbox"
                 checked={item.completed}
-                onChange={() => { dispatch(actions.updateCompleted(item.id)) }}
+                onChange={() => { dispatch(updateCompleted(item.id)) }}
               />
               <p className={item.completed? 'completedItem' : null}>{item.text}</p>
             </div>
             <span className="deleteBtn"
-              onClick={() => { dispatch(actions.deleteTodo(item.id)) }}
+              onClick={() => { dispatch(deleteTodo(item.id)) }}
             />
           </li>
         )}
